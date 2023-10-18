@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment{
+        DOCKER_CREDENTIALS = credentials('docker')
+    }
     stages{
         stage('build code'){
             steps{
@@ -15,7 +18,7 @@ pipeline{
         stage('build image'){
             steps{
                 script{
-                    sh "docker build -t rakesh958/online:$BUILD_NUMBER ."
+                    sh "docker build -t rakesh958/online:${BUILD_NUMBER} ."
 
                 }
             }
