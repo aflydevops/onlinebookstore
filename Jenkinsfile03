@@ -27,9 +27,9 @@ pipeline{
             steps{
                 script{
                     withCredentials([string(credentialsId: 'docker', variable: 'dockercred')]) {
-                        sh "docker login -u rakesh958 -p ${dockerpwd}"
+                        sh "docker login -u rakesh958 -p ${dockercred}"
                            }
-                      sh "docker push rakesh958/online:${BUILD_NUMBER}"
+                        sh "docker push rakesh958/online:${BUILD_NUMBER}"
                 }
             }
         }  
