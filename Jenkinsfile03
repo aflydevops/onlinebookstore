@@ -2,6 +2,7 @@ pipeline{
     agent any
     environment{
         DOCKER_CREDENTIALS = credentials('docker')
+        DOCKER_IMAGE='online'
     }
     stages{
         stage('build code'){
@@ -18,7 +19,7 @@ pipeline{
         stage('build image'){
             steps{
                 script{
-                    sh "docker build -t rakesh958/online:${BUILD_NUMBER} ."
+                    sh "docker build -t rakesh958/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
 
                 }
             }
@@ -29,7 +30,15 @@ pipeline{
                     withCredentials([string(credentialsId: 'docker', variable: 'dockercred')]) {
                         sh "docker login -u rakesh958 -p ${dockercred}"
                            }
-                        sh "docker push rakesh958/online:${BUILD_NUMBER}"
+                        sh "docker push rakesh958/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                }
+            }
+        }
+        stage('images to conatiner'){
+            steps{
+                script{
+                    sh "docker run -itd --name ${DOCKER_IMAGE} -p 8083:8080 rakesh958/${docker_image}:${BUILD_NUMBER}"
+
                 }
             }
         }  
