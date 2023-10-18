@@ -1,1 +1,3 @@
 600385059967:aws accoount id
+
+DOCKER TOKEN : dckr_pat_U9xpBvleuo3ovsBj6UNLO5DpDcA

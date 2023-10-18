@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment{
+        DOCKER CREDENTIALS = credentials('docker')
+    }
     stages{
         stage('build code'){
             steps{
@@ -12,5 +15,13 @@ pipeline{
                 sh "mvn test"
             }
         }
+        stage('build image'){
+            steps{
+                script{
+                    sh "docker build -t rakesh958/online:$BUILD_NUMBER ."
+
+                }
+            }
+        }  
     }
 }
