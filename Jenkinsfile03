@@ -26,11 +26,10 @@ pipeline{
         stage('push to hub'){
             steps{
                 script{
-                    withCredentials([usernameColonPassword(credentialsId: 'dockerpwd', variable: 'dockercred')]) {
+                    withCredentials([string(credentialsId: 'dockerpwd', variable: 'dockercred')]) {
                         sh "docker login -u rakesh958 -p ${dockerpwd}"
-
+                        } 
                         sh "docker push rakesh958/online:${BUILD_NUMBER}"
-                    } 
                 }
             }
         }  
